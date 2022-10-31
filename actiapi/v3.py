@@ -9,6 +9,7 @@ from actiapi import ActiGraphClient
 
 class ActiGraphClientV2(ActiGraphClient):
     BASE_URL = "https://api.actigraphcorp.com"
+    AUTH_API = "https://auth.actigraphcorp.com/connect/token"
 
     @staticmethod
     def _generate_headers(token: str, raw: bool = False):
@@ -19,8 +20,8 @@ class ActiGraphClientV2(ActiGraphClient):
         headers["Authorization"] = f"Bearer {token}"
         return headers
 
-    def _get_access_token(self, scope: str, auth_api: str):
-        endpoint = auth_api
+    def _get_access_token(self, scope: str):
+        endpoint = self.AUTH_API
         request_body = {
             "client_id": self.api_access_key,
             "client_secret": self.api_secret_key,
@@ -42,7 +43,6 @@ class ActiGraphClientV2(ActiGraphClient):
     def get_files(
         self,
         user: Union[int, str],
-        auth_api: str,
         study_id: int,
     ) -> List[str]:
         results = []
@@ -51,7 +51,6 @@ class ActiGraphClientV2(ActiGraphClient):
 
         token = self._get_access_token(
             "DataAccess",
-            auth_api=auth_api,
         )
 
         while True:
