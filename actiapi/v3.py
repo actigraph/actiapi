@@ -7,7 +7,7 @@ import requests
 from actiapi import ActiGraphClient
 
 
-class ActiGraphClientV2(ActiGraphClient):
+class ActiGraphClientV3(ActiGraphClient):
     BASE_URL = "https://api.actigraphcorp.com"
     AUTH_API = "https://auth.actigraphcorp.com/connect/token"
 
