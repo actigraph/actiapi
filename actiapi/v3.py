@@ -75,12 +75,13 @@ class ActiGraphClientV3(ActiGraphClient):
 
         return results
 
-    def get_study_metadata(self, token, study_id) -> List[Dict[str, Any]]:
+    def get_study_metadata(self, study_id) -> List[Dict[str, Any]]:
         """Save all study metadata to file."""
         offset = 0
         limit = 100
 
         subject_metadata = []
+        token = self._get_access_token("CentrePoint")
         while True:
             response = requests.get(
                 f"{self.BASE_URL}/centrepoint/v3/Studies/{study_id}/Subjects?offset={offset}",
