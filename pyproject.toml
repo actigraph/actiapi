@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "actiapi"
-version = "0.1.0"
+version = "0.1.1"
 description = "A python package for accessing ActiGraph data through the official ActiGraph API"
 authors = ["ActiGraph Data Science Team <science@theactigraph.com>"]
 maintainers = ["ActiGraph Data Science Team <science@theactigraph.com>"]
