@@ -57,7 +57,7 @@ class ActiGraphClientV2(ActiGraphClient):
             "GET", resource_uri_subject_metadata
         )
         subject_metadata_str = requests.get(
-            "/".join([resource_uri_subject_metadata]),
+            "/".join([ActiGraphClientV2.BASE_URL, resource_uri_subject_metadata]),
             headers=headers_subject_metadata,
         )
         subject_metadata = subject_metadata_str.json()
@@ -70,7 +70,7 @@ class ActiGraphClientV2(ActiGraphClient):
             "GET", resource_uri_subject_rawdata
         )
         subject_rawdata = requests.get(
-            "/".join([resource_uri_subject_rawdata]),
+            "/".join([ActiGraphClientV2.BASE_URL, resource_uri_subject_rawdata]),
             headers=headers_subject_rawdata,
         ).json()
 
@@ -81,7 +81,7 @@ class ActiGraphClientV2(ActiGraphClient):
         resource_uri_rawdata_url = f"v1/datafiles/{data_file_id}/DownloadUrl"
         headers_rawdata_url = self._generate_headers("GET", resource_uri_rawdata_url)
         rawdata_url = requests.get(
-            "/".join([resource_uri_rawdata_url]), headers=headers_rawdata_url
+            "/".join([ActiGraphClientV2.BASE_URL, resource_uri_rawdata_url]), headers=headers_rawdata_url
         )
 
         rawdata_dict = rawdata_url.json()
