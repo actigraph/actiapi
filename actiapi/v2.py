@@ -1,7 +1,6 @@
 import base64
 import hashlib
 import hmac
-
 from datetime import datetime
 from email.utils import formatdate
 from typing import Any, Dict, List
@@ -81,7 +80,8 @@ class ActiGraphClientV2(ActiGraphClient):
         resource_uri_rawdata_url = f"v1/datafiles/{data_file_id}/DownloadUrl"
         headers_rawdata_url = self._generate_headers("GET", resource_uri_rawdata_url)
         rawdata_url = requests.get(
-            "/".join([ActiGraphClientV2.BASE_URL, resource_uri_rawdata_url]), headers=headers_rawdata_url
+            "/".join([ActiGraphClientV2.BASE_URL, resource_uri_rawdata_url]),
+            headers=headers_rawdata_url,
         )
 
         rawdata_dict = rawdata_url.json()
