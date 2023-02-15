@@ -1,4 +1,7 @@
-"""Pull data from CentrePoint API v3."""
+"""Client for API V2.
+
+See https://github.com/actigraph/CentrePoint3APIDocumentation.
+"""
 import logging
 from typing import Any, Dict, List, Union
 
@@ -8,6 +11,8 @@ from actiapi import ActiGraphClient
 
 
 class ActiGraphClientV3(ActiGraphClient):
+    """Client for CentrePoint V3 API."""
+
     BASE_URL = "https://api.actigraphcorp.com"
     AUTH_API = "https://auth.actigraphcorp.com/connect/token"
 
@@ -54,7 +59,6 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-
         token = self._get_access_token(
             "DataAccess",
         )
@@ -76,7 +80,6 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-
         token = self._get_access_token("CentrePoint")
 
         results = self._get_paginated(
@@ -87,6 +90,15 @@ class ActiGraphClientV3(ActiGraphClient):
     def get_minute_summary(
         self, user: Union[int, str], study_id: int
     ) -> List[Dict[str, Any]]:
+        """Return minute level data.
+
+        Parameters
+        ----------
+        user:
+            User id
+        study_id:
+            Id of the study
+        """
         token = self._get_access_token(
             "Analytics",
         )
