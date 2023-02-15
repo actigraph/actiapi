@@ -1,0 +1,172 @@
+:py:mod:`actiapi.v3`
+====================
+
+.. py:module:: actiapi.v3
+
+.. autoapi-nested-parse::
+
+   Client for API V2.
+
+   See https://github.com/actigraph/CentrePoint3APIDocumentation.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   actiapi.v3.ActiGraphClientV3
+
+
+
+
+.. py:class:: ActiGraphClientV3(api_access_key: str, api_secret_key: str)
+
+   Bases: :py:obj:`actiapi.ActiGraphClient`
+
+   
+   Client for CentrePoint V3 API.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:attribute:: BASE_URL
+      :value: 'https://api.actigraphcorp.com'
+
+      
+
+   .. py:attribute:: AUTH_API
+      :value: 'https://auth.actigraphcorp.com/connect/token'
+
+      
+
+   .. py:method:: _generate_headers(token: str, raw: bool = False)
+      :staticmethod:
+
+
+   .. py:method:: _get_access_token(scope: str)
+
+
+   .. py:method:: get_files(user: Union[int, str], study_id: int) -> List[str]
+
+      
+      Return download URLs to raw AVRO files.
+
+      :param user: User id
+      :param study_id: Id of the study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: get_study_metadata(study_id) -> List[Dict[str, Any]]
+
+      
+      Save all study metadata to file.
+
+      :param study_id: Id of the study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: get_minute_summary(user: Union[int, str], study_id: int) -> List[Dict[str, Any]]
+
+      
+      Return minute level data.
+
+      :param user: User id
+      :param study_id: Id of the study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: get_daily_summary(user: Union[int, str], study_id: int) -> List[Dict[str, Any]]
+
+      
+      Return daily summary data.
+
+      :param user: User id
+      :param study_id: Id of the study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: _get_paginated(request: str, token: str)
+
+
+

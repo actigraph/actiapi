@@ -1,0 +1,153 @@
+:py:mod:`actiapi.v2`
+====================
+
+.. py:module:: actiapi.v2
+
+.. autoapi-nested-parse::
+
+   Client for API V2.
+
+   See https://github.com/actigraph/StudyAdminAPIDocumentation.
+
+   ..
+       !! processed by numpydoc !!
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   actiapi.v2.ActiGraphClientV2
+
+
+
+
+.. py:class:: ActiGraphClientV2(api_access_key: str, api_secret_key: str)
+
+   Bases: :py:obj:`actiapi.ActiGraphClient`
+
+   
+   Client for CentrePoint V2 API.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+   .. py:attribute:: BASE_URL
+      :value: 'https://studyadmin-api.actigraphcorp.com'
+
+      
+
+   .. py:method:: _HMACSHA256Base64(message: str)
+
+
+   .. py:method:: _generate_headers(http_verb, resource_uri)
+
+      
+      Formulate http headers.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: get_study_metadata(study_id: str) -> List[Dict[str, Any]]
+
+      
+      Download list of subjects and their metadata.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: get_files(subject_id) -> List[Dict[str, Any]]
+
+      
+      Get file list for given subject.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: get_url(data_file_id) -> str
+
+      
+      Get the URL for a file based on its id.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+

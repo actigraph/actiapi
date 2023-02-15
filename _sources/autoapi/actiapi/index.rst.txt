@@ -1,0 +1,77 @@
+:py:mod:`actiapi`
+=================
+
+.. py:module:: actiapi
+
+.. autoapi-nested-parse::
+
+   
+   A library for interacting with ActiGraph's API.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   v2/index.rst
+   v3/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   actiapi.ActiGraphClient
+
+
+
+
+.. py:class:: ActiGraphClient(api_access_key: str, api_secret_key: str)
+
+   
+   Base classe for ActiGraph API clients.
+
+   :param api_access_key: API access key
+   :param api_secret_key: API secret key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
+
