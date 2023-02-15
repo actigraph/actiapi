@@ -1,0 +1,68 @@
+name: Sphinx docs to gh-pages
+
+on:
+  workflow_dispatch:
+    logLevel:
+      description: 'Log level'
+      required: true
+      default: 'warning'
+      type: choice
+      options:
+        - info
+        - warning
+        - debug
+  push:
+    branches:
+      - main
+
+jobs:
+  generate_docs:
+    runs-on: ubuntu-latest
+    name: Generate docs
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: 'poetry'
+      - name: Install dependencies
+        run: |
+          poetry install
+      - name: Create the documents
+        run: |
+          poetry run make -C docs html
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-without-markdown
+          path: |
+            /tmp/sphinx-err-*
+      - name: Upload html pages
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: docs/build/
+
+  copy_docs:
+    runs-on: ubuntu-latest
+    needs: generate_docs
+    name: Copy docs
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Download pages
+        uses: actions/download-artifact@v3
+        with:
+          name: docs
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: html
+

@@ -1,3 +1,8 @@
+"""Client for API V2.
+
+See https://github.com/actigraph/StudyAdminAPIDocumentation.
+"""
+
 import base64
 import hashlib
 import hmac
@@ -11,6 +16,8 @@ from actiapi import ActiGraphClient
 
 
 class ActiGraphClientV2(ActiGraphClient):
+    """Client for CentrePoint V2 API."""
+
     BASE_URL = "https://studyadmin-api.actigraphcorp.com"
 
     def _HMACSHA256Base64(self, message: str):
@@ -26,9 +33,7 @@ class ActiGraphClientV2(ActiGraphClient):
         http_verb,
         resource_uri,
     ):
-        """
-        formulate http headers
-        """
+        """Formulate http headers."""
         cur_date = formatdate(timeval=None, localtime=False, usegmt=True)
         cur_date_iso = datetime.utcnow().isoformat().split(".")[0] + "Z"
         string_to_sign = "\n".join(
