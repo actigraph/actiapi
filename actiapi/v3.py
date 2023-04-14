@@ -77,8 +77,7 @@ class ActiGraphClientV3(ActiGraphClient):
             request_string += f"&startDate={start}"
         if end is not None:
             request_string += f"&endDate={end}"
-        if not request_string.endswith("&"):
-            request_string += "&"
+        request_string += "&"
         results = self._get_paginated(
             request_string,
             token,
