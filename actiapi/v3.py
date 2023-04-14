@@ -3,7 +3,7 @@
 See https://github.com/actigraph/CentrePoint3APIDocumentation.
 """
 import logging
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Union, Optional
 
 import requests
 
@@ -49,6 +49,8 @@ class ActiGraphClientV3(ActiGraphClient):
         self,
         user: Union[int, str],
         study_id: int,
+        start: Optional[str] = None,
+        end: Optional[str] = None,
     ) -> List[str]:
         """Return download URLs to raw AVRO files.
 
@@ -58,13 +60,27 @@ class ActiGraphClientV3(ActiGraphClient):
             User id
         study_id:
             Id of the study
+        start:
+            Start timestamp string in ISO8601 format
+        end:
+            End timestamp string in ISO8601 format
         """
         token = self._get_access_token(
             "DataAccess",
         )
-        results = self._get_paginated(
+
+        request_string = (
             f"/dataaccess/v3/files/studies/{study_id}/subjects/{user}"
-            f"/raw-accelerometer?fileFormat=avro&",
+            f"/raw-accelerometer?fileFormat=avro"
+        )
+        if start is not None:
+            request_string += f"&startDate={start}"
+        if end is not None:
+            request_string += f"&endDate={end}"
+        if not request_string.endswith("&"):
+            request_string += "&"
+        results = self._get_paginated(
+            request_string,
             token,
         )
 
