@@ -87,18 +87,6 @@
 <li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3._get_paginated"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV3._get_paginated()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3">ActiGraphClientV3</a><ul>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.BASE_URL">BASE_URL</a></li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.AUTH_API">AUTH_API</a></li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3._generate_headers">_generate_headers</a></li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3._get_access_token">_get_access_token</a></li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_files">get_files</a></li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_study_metadata">get_study_metadata</a></li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_minute_summary">get_minute_summary</a></li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_daily_summary">get_daily_summary</a></li>
-<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3._get_paginated">_get_paginated</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -182,13 +170,15 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="actiapi.v3.ActiGraphClientV3.get_files">
-<span class="sig-name descname"><span class="pre">get_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/actiapi/v3.html#ActiGraphClientV3.get_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v3.ActiGraphClientV3.get_files" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/actiapi/v3.html#ActiGraphClientV3.get_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v3.ActiGraphClientV3.get_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return download URLs to raw AVRO files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – User id</p></li>
 <li><p><strong>study_id</strong> – Id of the study</p></li>
+<li><p><strong>start</strong> – Start timestamp string in ISO8601 format</p></li>
+<li><p><strong>end</strong> – End timestamp string in ISO8601 format</p></li>
 </ul>
 </dd>
 </dl>

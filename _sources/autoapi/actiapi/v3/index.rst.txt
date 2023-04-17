@@ -67,13 +67,15 @@ Classes
    .. py:method:: _get_access_token(scope: str)
 
 
-   .. py:method:: get_files(user: Union[int, str], study_id: int) -> List[str]
+   .. py:method:: get_files(user: Union[int, str], study_id: int, start: Optional[str] = None, end: Optional[str] = None) -> List[str]
 
       
       Return download URLs to raw AVRO files.
 
       :param user: User id
       :param study_id: Id of the study
+      :param start: Start timestamp string in ISO8601 format
+      :param end: End timestamp string in ISO8601 format
 
 
 
