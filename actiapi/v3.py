@@ -3,12 +3,11 @@
 See https://github.com/actigraph/CentrePoint3APIDocumentation.
 """
 import logging
-from typing import Any, Dict, List, Union, Optional
+from typing import Any, Dict, List, Optional, Union
 
 import requests
 
 from actiapi import ActiGraphClient
-
 
 analytics_token = None
 
