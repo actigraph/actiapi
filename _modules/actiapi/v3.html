@@ -105,11 +105,13 @@
 <span class="sd">See https://github.com/actigraph/CentrePoint3APIDocumentation.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="kn">from</span> <span class="nn">actiapi</span> <span class="kn">import</span> <span class="n">ActiGraphClient</span>
+
+<div class="viewcode-block" id="analytics_token"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.analytics_token">[docs]</a><span class="n">analytics_token</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="ActiGraphClientV3"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3">[docs]</a><span class="k">class</span> <span class="nc">ActiGraphClientV3</span><span class="p">(</span><span class="n">ActiGraphClient</span><span class="p">):</span>
@@ -216,12 +218,21 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
-            <span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/MinuteSummaries?&quot;</span><span class="p">,</span> <span class="n">token</span>
-        <span class="p">)</span>
+        <span class="k">global</span> <span class="n">analytics_token</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/MinuteSummaries?&quot;</span><span class="p">,</span>
+                <span class="n">analytics_token</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">analytics_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
+                <span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/MinuteSummaries?&quot;</span><span class="p">,</span>
+                <span class="n">analytics_token</span><span class="p">,</span>
+            <span class="p">)</span>
+
         <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="ActiGraphClientV3.get_daily_summary"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3.get_daily_summary">[docs]</a>    <span class="k">def</span> <span class="nf">get_daily_summary</span><span class="p">(</span>
@@ -236,12 +247,21 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
-            <span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DailyStatistics?&quot;</span><span class="p">,</span> <span class="n">token</span>
-        <span class="p">)</span>
+        <span class="k">global</span> <span class="n">analytics_token</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DailyStatistics?&quot;</span><span class="p">,</span>
+                <span class="n">analytics_token</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">analytics_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
+                <span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DailyStatistics?&quot;</span><span class="p">,</span>
+                <span class="n">analytics_token</span><span class="p">,</span>
+            <span class="p">)</span>
+
         <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="ActiGraphClientV3._get_paginated"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3._get_paginated">[docs]</a>    <span class="k">def</span> <span class="nf">_get_paginated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
