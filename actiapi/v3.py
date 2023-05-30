@@ -10,6 +10,9 @@ import requests
 from actiapi import ActiGraphClient
 
 
+analytics_token = None
+
+
 class ActiGraphClientV3(ActiGraphClient):
     """Client for CentrePoint V3 API."""
 
@@ -114,12 +117,21 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        token = self._get_access_token(
-            "Analytics",
-        )
-        results = self._get_paginated(
-            f"/analytics/v3/Studies/{study_id}/Subjects/{user}/MinuteSummaries?", token
-        )
+        global analytics_token
+        try:
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/MinuteSummaries?",
+                analytics_token,
+            )
+        except KeyError:
+            analytics_token = self._get_access_token(
+                "Analytics",
+            )
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/MinuteSummaries?",
+                analytics_token,
+            )
+
         return results
 
     def get_daily_summary(
@@ -134,12 +146,21 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        token = self._get_access_token(
-            "Analytics",
-        )
-        results = self._get_paginated(
-            f"/analytics/v3/Studies/{study_id}/Subjects/{user}/DailyStatistics?", token
-        )
+        global analytics_token
+        try:
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/DailyStatistics?",
+                analytics_token,
+            )
+        except KeyError:
+            analytics_token = self._get_access_token(
+                "Analytics",
+            )
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/DailyStatistics?",
+                analytics_token,
+            )
+
         return results
 
     def _get_paginated(self, request: str, token: str):
