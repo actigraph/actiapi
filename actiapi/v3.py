@@ -117,12 +117,14 @@ class ActiGraphClientV3(ActiGraphClient):
             Id of the study
         """
         global analytics_token
+
         try:
+            assert analytics_token is not None
             results = self._get_paginated(
                 f"/analytics/v3/Studies/{study_id}/Subjects/{user}/MinuteSummaries?",
                 analytics_token,
             )
-        except KeyError:
+        except (KeyError, AssertionError):
             analytics_token = self._get_access_token(
                 "Analytics",
             )
@@ -147,11 +149,12 @@ class ActiGraphClientV3(ActiGraphClient):
         """
         global analytics_token
         try:
+            assert analytics_token is not None
             results = self._get_paginated(
                 f"/analytics/v3/Studies/{study_id}/Subjects/{user}/DailyStatistics?",
                 analytics_token,
             )
-        except KeyError:
+        except (KeyError, AssertionError):
             analytics_token = self._get_access_token(
                 "Analytics",
             )
