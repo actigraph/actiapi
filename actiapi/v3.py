@@ -176,7 +176,9 @@ class ActiGraphClientV3(ActiGraphClient):
                 self.BASE_URL + paginated_request,
                 headers=headers,
             )
-            reply = response.json()
+            reply = validate_response(response)
+            if reply is None:
+                break
             total_count = reply["totalCount"]
 
             for item in reply["items"]:
@@ -188,3 +190,12 @@ class ActiGraphClientV3(ActiGraphClient):
             logging.error("No raw data found.")
             return []
         return results
+
+
+def validate_response(response):
+    if response.status_code == 404:
+        logging.warning("404 Not Found!")
+        result = None
+    else:
+        result = response.json()
+    return result

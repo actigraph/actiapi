@@ -1,6 +1,14 @@
+from actiapi.v3 import validate_response
+
+
 def test_metadata(v3_client, v3_study_id):
     metadata = v3_client.get_study_metadata(v3_study_id)
     assert len(metadata) == 2
+
+
+def test_validate_empty_response(response_404):
+    result = validate_response(response_404)
+    assert result is None
 
 
 def test_minutes(v3_client, v3_study_id):

@@ -24,3 +24,13 @@ def v3_study_id():
 def v3_client(v3_access_key, v3_secret_key):
     client = ActiGraphClientV3(v3_access_key, v3_secret_key)
     return client
+
+
+@pytest.fixture(scope="session")
+def response_404():
+    """Simulate an Http response with status code 404."""
+
+    class Response:
+        status_code = 404
+
+    return Response()
