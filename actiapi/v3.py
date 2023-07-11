@@ -3,7 +3,7 @@
 See https://github.com/actigraph/CentrePoint3APIDocumentation.
 """
 import logging
-from typing import Any, Dict, List, Optional, Union, Literal
+from typing import Any, Dict, List, Literal, Optional, Union
 
 import requests
 
@@ -198,6 +198,7 @@ class ActiGraphClientV3(ActiGraphClient):
 
 
 def validate_response(response):
+    """Check response status."""
     if response.status_code == 404:
         logging.warning("404 Not Found!")
         result = None
