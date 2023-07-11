@@ -105,7 +105,7 @@
 <span class="sd">See https://github.com/actigraph/CentrePoint3APIDocumentation.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Literal</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
@@ -155,6 +155,7 @@
         <span class="n">study_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_format</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;avro&quot;</span><span class="p">,</span> <span class="s2">&quot;csv&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;avro&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return download URLs to raw AVRO files.</span>
 
@@ -168,14 +169,18 @@
 <span class="sd">            Start timestamp string in ISO8601 format</span>
 <span class="sd">        end:</span>
 <span class="sd">            End timestamp string in ISO8601 format</span>
+<span class="sd">        data_format:</span>
+<span class="sd">            Raw data file format; avro (default) or csv.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">data_format</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;avro&quot;</span><span class="p">,</span> <span class="s2">&quot;csv&quot;</span><span class="p">)</span>
+
         <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
             <span class="s2">&quot;DataAccess&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">request_string</span> <span class="o">=</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;/dataaccess/v3/files/studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;/raw-accelerometer?fileFormat=avro&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;/raw-accelerometer?fileFormat=</span><span class="si">{</span><span class="n">data_format</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">request_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;&amp;startDate=</span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -278,7 +283,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">paginated_request</span><span class="p">,</span>
                 <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">reply</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">reply</span> <span class="o">=</span> <span class="n">validate_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">reply</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
             <span class="n">total_count</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="s2">&quot;totalCount&quot;</span><span class="p">]</span>
 
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">reply</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]:</span>
@@ -290,6 +297,15 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No raw data found.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="n">results</span></div></div>
+
+
+<div class="viewcode-block" id="validate_response"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.validate_response">[docs]</a><span class="k">def</span> <span class="nf">validate_response</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;404 Not Found!&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
     </div>
