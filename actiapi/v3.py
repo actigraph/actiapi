@@ -3,7 +3,7 @@
 See https://github.com/actigraph/CentrePoint3APIDocumentation.
 """
 import logging
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, Literal
 
 import requests
 
@@ -53,6 +53,7 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id: int,
         start: Optional[str] = None,
         end: Optional[str] = None,
+        data_format: Literal["avro", "csv"] = "avro",
     ) -> List[str]:
         """Return download URLs to raw AVRO files.
 
@@ -66,14 +67,18 @@ class ActiGraphClientV3(ActiGraphClient):
             Start timestamp string in ISO8601 format
         end:
             End timestamp string in ISO8601 format
+        data_format:
+            Raw data file format; avro (default) or csv.
         """
+        assert data_format in ("avro", "csv")
+
         token = self._get_access_token(
             "DataAccess",
         )
 
         request_string = (
             f"/dataaccess/v3/files/studies/{study_id}/subjects/{user}"
-            f"/raw-accelerometer?fileFormat=avro"
+            f"/raw-accelerometer?fileFormat={data_format}"
         )
         if start is not None:
             request_string += f"&startDate={start}"
@@ -176,7 +181,9 @@ class ActiGraphClientV3(ActiGraphClient):
                 self.BASE_URL + paginated_request,
                 headers=headers,
             )
-            reply = response.json()
+            reply = validate_response(response)
+            if reply is None:
+                break
             total_count = reply["totalCount"]
 
             for item in reply["items"]:
@@ -188,3 +195,12 @@ class ActiGraphClientV3(ActiGraphClient):
             logging.error("No raw data found.")
             return []
         return results
+
+
+def validate_response(response):
+    if response.status_code == 404:
+        logging.warning("404 Not Found!")
+        result = None
+    else:
+        result = response.json()
+    return result
