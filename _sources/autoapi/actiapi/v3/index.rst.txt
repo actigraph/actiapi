@@ -195,4 +195,24 @@ Attributes
 
 .. py:function:: validate_response(response)
 
+   
+   Check response status.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ..
+       !! processed by numpydoc !!
 
