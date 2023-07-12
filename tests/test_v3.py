@@ -11,6 +11,15 @@ def test_validate_empty_response(response_404):
     assert result is None
 
 
+def test_event_marker(v3_client, v3_user, v3_study_id):
+    # This test study has no event marker data,
+    # so this test merely verifies
+    # that the `get_event_markers(.)` method does not
+    # crash and returns an empty result.
+    result = v3_client.get_event_markers(v3_user, v3_study_id)
+    assert len(result) == 0
+
+
 def test_minutes(v3_client, v3_study_id):
     metadata = v3_client.get_study_metadata(v3_study_id)
     id_ = metadata[0]["id"]

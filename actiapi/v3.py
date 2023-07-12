@@ -109,6 +109,35 @@ class ActiGraphClientV3(ActiGraphClient):
         )
         return results
 
+    def get_event_markers(self, user: Union[int, str], study_id: int) -> List[str]:
+        """Return event marker data.
+
+        Parameters
+        ----------
+        user:
+            User id
+        study_id:
+            Id of the study
+        """
+        global analytics_token
+
+        try:
+            assert analytics_token is not None
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/EventMarkers?",
+                analytics_token,
+            )
+        except (KeyError, AssertionError):
+            analytics_token = self._get_access_token(
+                "Analytics",
+            )
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/EventMarkers?",
+                analytics_token,
+            )
+
+        return results
+
     def get_minute_summary(
         self, user: Union[int, str], study_id: int
     ) -> List[Dict[str, Any]]:

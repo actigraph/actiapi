@@ -21,6 +21,11 @@ def v3_study_id():
 
 
 @pytest.fixture(scope="session")
+def v3_user():
+    return 55212
+
+
+@pytest.fixture(scope="session")
 def v3_client(v3_access_key, v3_secret_key):
     client = ActiGraphClientV3(v3_access_key, v3_secret_key)
     return client
