@@ -94,6 +94,19 @@ class ActiGraphClientV3(ActiGraphClient):
 
         return results
 
+    def get_study_info(self, study_id) -> List[Dict[str, Any]]:
+        """Save high-level study info to file.
+
+        Parameters
+        ----------
+        study_id:
+            Id of the study
+        """
+        token = self._get_access_token("CentrePoint")
+
+        results = self._get_single(f"/centrepoint/v3/Studies/{study_id}", token)
+        return results
+
     def get_study_metadata(self, study_id) -> List[Dict[str, Any]]:
         """Save all study metadata to file.
 
@@ -199,18 +212,22 @@ class ActiGraphClientV3(ActiGraphClient):
 
         return results
 
+    def _get_single(self, request: str, token: str):
+        headers = self._generate_headers(token)
+        response = requests.get(
+            self.BASE_URL + request,
+            headers=headers,
+        )
+        reply = validate_response(response)
+        return reply
+
     def _get_paginated(self, request: str, token: str):
         results = []
         offset = 0
         limit = 100
         while True:
             paginated_request = f"{request}offset={offset}&limit={limit}"
-            headers = self._generate_headers(token)
-            response = requests.get(
-                self.BASE_URL + paginated_request,
-                headers=headers,
-            )
-            reply = validate_response(response)
+            reply = self._get_single(request=paginated_request, token=token)
             if reply is None:
                 break
             total_count = reply["totalCount"]

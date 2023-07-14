@@ -1,6 +1,12 @@
 from actiapi.v3 import validate_response
 
 
+def test_study_info(v3_client, v3_study_id):
+    info = v3_client.get_study_info(v3_study_id)
+    assert info["id"] == 954
+    assert info["name"] == "GT9X - CP3 Validation Study"
+
+
 def test_metadata(v3_client, v3_study_id):
     metadata = v3_client.get_study_metadata(v3_study_id)
     assert len(metadata) == 2
