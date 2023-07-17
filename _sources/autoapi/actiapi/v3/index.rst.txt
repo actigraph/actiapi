@@ -115,11 +115,60 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+   .. py:method:: get_study_info(study_id) -> List[Dict[str, Any]]
+
+      
+      Save high-level study info to file.
+
+      :param study_id: Id of the study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
    .. py:method:: get_study_metadata(study_id) -> List[Dict[str, Any]]
 
       
       Save all study metadata to file.
 
+      :param study_id: Id of the study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+   .. py:method:: get_event_markers(user: Union[int, str], study_id: int) -> List[str]
+
+      
+      Return event marker data.
+
+      :param user: User id
       :param study_id: Id of the study
 
 
@@ -188,6 +237,9 @@ Attributes
 
       ..
           !! processed by numpydoc !!
+
+   .. py:method:: _get_single(request: str, token: str)
+
 
    .. py:method:: _get_paginated(request: str, token: str)
 
