@@ -94,6 +94,19 @@ class ActiGraphClientV3(ActiGraphClient):
 
         return results
 
+    def get_study_info(self, study_id) -> List[Dict[str, Any]]:
+        """Save high-level study info to file.
+
+        Parameters
+        ----------
+        study_id:
+            Id of the study
+        """
+        token = self._get_access_token("CentrePoint")
+
+        results = self._get_single(f"/centrepoint/v3/Studies/{study_id}", token)
+        return results
+
     def get_study_metadata(self, study_id) -> List[Dict[str, Any]]:
         """Save all study metadata to file.
 
@@ -107,6 +120,35 @@ class ActiGraphClientV3(ActiGraphClient):
         results = self._get_paginated(
             f"/centrepoint/v3/Studies/{study_id}/Subjects?", token
         )
+        return results
+
+    def get_event_markers(self, user: Union[int, str], study_id: int) -> List[str]:
+        """Return event marker data.
+
+        Parameters
+        ----------
+        user:
+            User id
+        study_id:
+            Id of the study
+        """
+        global analytics_token
+
+        try:
+            assert analytics_token is not None
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/EventMarkers?",
+                analytics_token,
+            )
+        except (KeyError, AssertionError):
+            analytics_token = self._get_access_token(
+                "Analytics",
+            )
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/EventMarkers?",
+                analytics_token,
+            )
+
         return results
 
     def get_minute_summary(
@@ -170,18 +212,22 @@ class ActiGraphClientV3(ActiGraphClient):
 
         return results
 
+    def _get_single(self, request: str, token: str):
+        headers = self._generate_headers(token)
+        response = requests.get(
+            self.BASE_URL + request,
+            headers=headers,
+        )
+        reply = validate_response(response)
+        return reply
+
     def _get_paginated(self, request: str, token: str):
         results = []
         offset = 0
         limit = 100
         while True:
             paginated_request = f"{request}offset={offset}&limit={limit}"
-            headers = self._generate_headers(token)
-            response = requests.get(
-                self.BASE_URL + paginated_request,
-                headers=headers,
-            )
-            reply = validate_response(response)
+            reply = self._get_single(request=paginated_request, token=token)
             if reply is None:
                 break
             total_count = reply["totalCount"]

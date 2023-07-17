@@ -1,6 +1,12 @@
 from actiapi.v3 import validate_response
 
 
+def test_study_info(v3_client, v3_study_id):
+    info = v3_client.get_study_info(v3_study_id)
+    assert info["id"] == 954
+    assert info["name"] == "GT9X - CP3 Validation Study"
+
+
 def test_metadata(v3_client, v3_study_id):
     metadata = v3_client.get_study_metadata(v3_study_id)
     assert len(metadata) == 2
@@ -9,6 +15,15 @@ def test_metadata(v3_client, v3_study_id):
 def test_validate_empty_response(response_404):
     result = validate_response(response_404)
     assert result is None
+
+
+def test_event_marker(v3_client, v3_user, v3_study_id):
+    # This test study has no event marker data,
+    # so this test merely verifies
+    # that the `get_event_markers(.)` method does not
+    # crash and returns an empty result.
+    result = v3_client.get_event_markers(v3_user, v3_study_id)
+    assert len(result) == 0
 
 
 def test_minutes(v3_client, v3_study_id):
