@@ -17,6 +17,12 @@ def test_validate_empty_response(response_404):
     assert result is None
 
 
+def test_sleep(v3_client, v3_user, v3_study_id):
+    sleep = v3_client.get_sleep_summary(v3_user, v3_study_id)
+    assert len(sleep) == 8
+    assert sleep[0]["inBedTime"] == "2022-03-30T16:29:00+00:00"
+
+
 def test_event_marker(v3_client, v3_user, v3_study_id):
     # This test study has no event marker data,
     # so this test merely verifies
