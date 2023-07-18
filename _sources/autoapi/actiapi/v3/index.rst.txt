@@ -238,6 +238,31 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+   .. py:method:: get_sleep_summary(user: Union[int, str], study_id: int) -> List[Dict[str, Any]]
+
+      
+      Return Dustin-Tracy sleep summary data.
+
+      :param user: User id
+      :param study_id: Id of the study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
    .. py:method:: _get_single(request: str, token: str)
 
 
