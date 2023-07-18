@@ -212,6 +212,38 @@ class ActiGraphClientV3(ActiGraphClient):
 
         return results
 
+    def get_sleep_summary(
+        self, user: Union[int, str], study_id: int
+    ) -> List[Dict[str, Any]]:
+        """Return Dustin-Tracy sleep summary data.
+
+        Parameters
+        ----------
+        user:
+            User id
+        study_id:
+            Id of the study
+        """
+        global analytics_token
+        try:
+            assert analytics_token is not None
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/"
+                f"{user}/DustinTracySleepPeriods?",
+                analytics_token,
+            )
+        except (KeyError, AssertionError):
+            analytics_token = self._get_access_token(
+                "Analytics",
+            )
+            results = self._get_paginated(
+                f"/analytics/v3/Studies/{study_id}/Subjects/"
+                f"{user}/DustinTracySleepPeriods?",
+                analytics_token,
+            )
+
+        return results
+
     def _get_single(self, request: str, token: str):
         headers = self._generate_headers(token)
         response = requests.get(
