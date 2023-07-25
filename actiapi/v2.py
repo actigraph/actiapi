@@ -8,7 +8,7 @@ import hashlib
 import hmac
 from datetime import datetime
 from email.utils import formatdate
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 import requests
 
@@ -91,3 +91,22 @@ class ActiGraphClientV2(ActiGraphClient):
 
         rawdata_dict = rawdata_url.json()
         return rawdata_dict["DownloadURL"]
+
+    def get_daily_summary(self, subject_id: Union[int, str]) -> List[Dict[str, Any]]:
+        """Return daily summary data.
+
+        Parameters
+        ----------
+        user:
+            Global user_id
+        """
+        resource_uri_subject_rawdata = "v1/subjects/" + str(subject_id) + "/daystats"
+        headers_subject_rawdata = self._generate_headers(
+            "GET", resource_uri_subject_rawdata
+        )
+        subject_rawdata = requests.get(
+            "/".join([ActiGraphClientV2.BASE_URL, resource_uri_subject_rawdata]),
+            headers=headers_subject_rawdata,
+        ).json()
+
+        return subject_rawdata
