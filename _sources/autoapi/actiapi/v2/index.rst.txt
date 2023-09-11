@@ -26,6 +26,18 @@ Classes
 
 
 
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   actiapi.v2.session
+
+
+.. py:data:: session
+
+   
+
 .. py:class:: ActiGraphClientV2(api_access_key: str, api_secret_key: str)
 
    Bases: :py:obj:`actiapi.ActiGraphClient`

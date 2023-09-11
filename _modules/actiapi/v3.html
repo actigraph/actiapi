@@ -112,6 +112,7 @@
 <span class="kn">from</span> <span class="nn">actiapi</span> <span class="kn">import</span> <span class="n">ActiGraphClient</span>
 
 <div class="viewcode-block" id="analytics_token"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.analytics_token">[docs]</a><span class="n">analytics_token</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="session"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.session">[docs]</a><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="ActiGraphClientV3"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3">[docs]</a><span class="k">class</span> <span class="nc">ActiGraphClientV3</span><span class="p">(</span><span class="n">ActiGraphClient</span><span class="p">):</span>
@@ -348,9 +349,10 @@
 
 <div class="viewcode-block" id="ActiGraphClientV3._get_single"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3._get_single">[docs]</a>    <span class="k">def</span> <span class="nf">_get_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_headers</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">request</span><span class="p">,</span>
             <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+            <span class="n">stream</span><span class="o">=</span><span class="kc">False</span>
         <span class="p">)</span>
         <span class="n">reply</span> <span class="o">=</span> <span class="n">validate_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">reply</span></div>
@@ -364,6 +366,7 @@
             <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_single</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">paginated_request</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">reply</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">break</span>
+
             <span class="n">total_count</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="s2">&quot;totalCount&quot;</span><span class="p">]</span>
 
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">reply</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]:</span>

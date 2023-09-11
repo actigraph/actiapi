@@ -116,6 +116,7 @@
 
 <span class="kn">from</span> <span class="nn">actiapi</span> <span class="kn">import</span> <span class="n">ActiGraphClient</span>
 
+<div class="viewcode-block" id="session"><a class="viewcode-back" href="../../autoapi/actiapi/v2/index.html#actiapi.v2.session">[docs]</a><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ActiGraphClientV2"><a class="viewcode-back" href="../../autoapi/actiapi/v2/index.html#actiapi.v2.ActiGraphClientV2">[docs]</a><span class="k">class</span> <span class="nc">ActiGraphClientV2</span><span class="p">(</span><span class="n">ActiGraphClient</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Client for CentrePoint V2 API.&quot;&quot;&quot;</span>
@@ -162,9 +163,9 @@
         <span class="n">headers_subject_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_headers</span><span class="p">(</span>
             <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">resource_uri_subject_metadata</span>
         <span class="p">)</span>
-        <span class="n">subject_metadata_str</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">subject_metadata_str</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ActiGraphClientV2</span><span class="o">.</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="n">resource_uri_subject_metadata</span><span class="p">]),</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers_subject_metadata</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers_subject_metadata</span><span class="p">,</span><span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">subject_metadata</span> <span class="o">=</span> <span class="n">subject_metadata_str</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">subject_metadata</span></div>
@@ -175,9 +176,9 @@
         <span class="n">headers_subject_rawdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_headers</span><span class="p">(</span>
             <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">resource_uri_subject_rawdata</span>
         <span class="p">)</span>
-        <span class="n">subject_rawdata</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">subject_rawdata</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ActiGraphClientV2</span><span class="o">.</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="n">resource_uri_subject_rawdata</span><span class="p">]),</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers_subject_rawdata</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers_subject_rawdata</span><span class="p">,</span><span class="n">stream</span><span class="o">=</span><span class="kc">False</span>
         <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">subject_rawdata</span><span class="p">[</span><span class="s2">&quot;RAW&quot;</span><span class="p">]</span></div>
@@ -186,9 +187,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the URL for a file based on its id.&quot;&quot;&quot;</span>
         <span class="n">resource_uri_rawdata_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;v1/datafiles/</span><span class="si">{</span><span class="n">data_file_id</span><span class="si">}</span><span class="s2">/DownloadUrl&quot;</span>
         <span class="n">headers_rawdata_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_headers</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">resource_uri_rawdata_url</span><span class="p">)</span>
-        <span class="n">rawdata_url</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">rawdata_url</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ActiGraphClientV2</span><span class="o">.</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="n">resource_uri_rawdata_url</span><span class="p">]),</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers_rawdata_url</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers_rawdata_url</span><span class="p">,</span><span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">rawdata_dict</span> <span class="o">=</span> <span class="n">rawdata_url</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
@@ -206,9 +207,9 @@
         <span class="n">headers_subject_rawdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_headers</span><span class="p">(</span>
             <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">resource_uri_subject_rawdata</span>
         <span class="p">)</span>
-        <span class="n">subject_rawdata</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">subject_rawdata</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">ActiGraphClientV2</span><span class="o">.</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="n">resource_uri_subject_rawdata</span><span class="p">]),</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers_subject_rawdata</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers_subject_rawdata</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">subject_rawdata</span></div></div>

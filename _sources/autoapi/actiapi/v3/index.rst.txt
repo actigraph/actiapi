@@ -40,9 +40,14 @@ Attributes
 .. autoapisummary::
 
    actiapi.v3.analytics_token
+   actiapi.v3.session
 
 
 .. py:data:: analytics_token
+
+   
+
+.. py:data:: session
 
    
 
