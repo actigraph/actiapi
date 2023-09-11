@@ -247,11 +247,7 @@ class ActiGraphClientV3(ActiGraphClient):
 
     def _get_single(self, request: str, token: str):
         headers = self._generate_headers(token)
-        response = session.get(
-            self.BASE_URL + request,
-            headers=headers,
-            stream=False
-        )
+        response = session.get(self.BASE_URL + request, headers=headers, stream=False)
         reply = validate_response(response)
         return reply
 
