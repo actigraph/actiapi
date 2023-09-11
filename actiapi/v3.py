@@ -10,6 +10,7 @@ import requests
 from actiapi import ActiGraphClient
 
 analytics_token = None
+session = requests.Session()
 
 
 class ActiGraphClientV3(ActiGraphClient):
@@ -246,9 +247,10 @@ class ActiGraphClientV3(ActiGraphClient):
 
     def _get_single(self, request: str, token: str):
         headers = self._generate_headers(token)
-        response = requests.get(
+        response = session.get(
             self.BASE_URL + request,
             headers=headers,
+            stream=False
         )
         reply = validate_response(response)
         return reply
@@ -262,6 +264,7 @@ class ActiGraphClientV3(ActiGraphClient):
             reply = self._get_single(request=paginated_request, token=token)
             if reply is None:
                 break
+
             total_count = reply["totalCount"]
 
             for item in reply["items"]:
