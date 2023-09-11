@@ -83,6 +83,7 @@
 <li><a class="reference internal" href="#actiapi.v2.ActiGraphClientV2.get_study_metadata"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV2.get_study_metadata()</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v2.ActiGraphClientV2.get_files"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV2.get_files()</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v2.ActiGraphClientV2.get_url"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV2.get_url()</span></code></a></li>
+<li><a class="reference internal" href="#actiapi.v2.ActiGraphClientV2.get_daily_summary"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV2.get_daily_summary()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -178,6 +179,17 @@
 <dt class="sig sig-object py" id="actiapi.v2.ActiGraphClientV2.get_url">
 <span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_file_id</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../../_modules/actiapi/v2.html#ActiGraphClientV2.get_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v2.ActiGraphClientV2.get_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the URL for a file based on its id.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="actiapi.v2.ActiGraphClientV2.get_daily_summary">
+<span class="sig-name descname"><span class="pre">get_daily_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/actiapi/v2.html#ActiGraphClientV2.get_daily_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v2.ActiGraphClientV2.get_daily_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return daily summary data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> – Global user_id</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

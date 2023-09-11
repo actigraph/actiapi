@@ -150,4 +150,28 @@ Classes
       ..
           !! processed by numpydoc !!
 
+   .. py:method:: get_daily_summary(subject_id: Union[int, str]) -> List[Dict[str, Any]]
+
+      
+      Return daily summary data.
+
+      :param user: Global user_id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
 
