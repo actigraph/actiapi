@@ -14,6 +14,7 @@ import requests
 
 from actiapi import ActiGraphClient
 
+session = requests.Session()
 
 class ActiGraphClientV2(ActiGraphClient):
     """Client for CentrePoint V2 API."""
@@ -60,9 +61,9 @@ class ActiGraphClientV2(ActiGraphClient):
         headers_subject_metadata = self._generate_headers(
             "GET", resource_uri_subject_metadata
         )
-        subject_metadata_str = requests.get(
+        subject_metadata_str = session.get(
             "/".join([ActiGraphClientV2.BASE_URL, resource_uri_subject_metadata]),
-            headers=headers_subject_metadata,
+            headers=headers_subject_metadata,stream=False,
         )
         subject_metadata = subject_metadata_str.json()
         return subject_metadata
@@ -73,9 +74,9 @@ class ActiGraphClientV2(ActiGraphClient):
         headers_subject_rawdata = self._generate_headers(
             "GET", resource_uri_subject_rawdata
         )
-        subject_rawdata = requests.get(
+        subject_rawdata = session.get(
             "/".join([ActiGraphClientV2.BASE_URL, resource_uri_subject_rawdata]),
-            headers=headers_subject_rawdata,
+            headers=headers_subject_rawdata,stream=False
         ).json()
 
         return subject_rawdata["RAW"]
@@ -84,9 +85,9 @@ class ActiGraphClientV2(ActiGraphClient):
         """Get the URL for a file based on its id."""
         resource_uri_rawdata_url = f"v1/datafiles/{data_file_id}/DownloadUrl"
         headers_rawdata_url = self._generate_headers("GET", resource_uri_rawdata_url)
-        rawdata_url = requests.get(
+        rawdata_url = session.get(
             "/".join([ActiGraphClientV2.BASE_URL, resource_uri_rawdata_url]),
-            headers=headers_rawdata_url,
+            headers=headers_rawdata_url,stream=False,
         )
 
         rawdata_dict = rawdata_url.json()
@@ -104,9 +105,9 @@ class ActiGraphClientV2(ActiGraphClient):
         headers_subject_rawdata = self._generate_headers(
             "GET", resource_uri_subject_rawdata
         )
-        subject_rawdata = requests.get(
+        subject_rawdata = session.get(
             "/".join([ActiGraphClientV2.BASE_URL, resource_uri_subject_rawdata]),
-            headers=headers_subject_rawdata,
+            headers=headers_subject_rawdata, stream=False,
         ).json()
 
         return subject_rawdata
