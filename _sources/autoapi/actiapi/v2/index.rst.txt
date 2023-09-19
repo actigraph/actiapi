@@ -40,6 +40,7 @@ Attributes
 
 .. py:class:: ActiGraphClientV2(api_access_key: str, api_secret_key: str)
 
+
    Bases: :py:obj:`actiapi.ActiGraphClient`
 
    

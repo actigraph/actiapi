@@ -52,6 +52,7 @@ Classes
 
 .. py:class:: ActiGraphClient(api_access_key: str, api_secret_key: str)
 
+
    
    Base classe for ActiGraph API clients.
 
