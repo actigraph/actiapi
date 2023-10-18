@@ -280,7 +280,7 @@ class ActiGraphClientV3(ActiGraphClient):
 def validate_response(response):
     """Check response status."""
     if response.status_code == 404:
-        logger.warning("404 Not Found!")
+        logger.error("404 Not Found!")
         result = None
     else:
         result = response.json()
