@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "actiapi"
-version = "0.2.5"
+version = "0.2.6"
 description = "A python package for accessing ActiGraph data through the official ActiGraph API"
 authors = ["ActiGraph Data Science Team <science@theactigraph.com>"]
 maintainers = ["ActiGraph Data Science Team <science@theactigraph.com>"]
@@ -19,7 +19,7 @@ numpydoc = ">= 1.5.0"
 sphinx-autoapi = "^2.0.0"
 sphinx-bootstrap-theme = ">= 0.8.1"
 sphinx-gallery = "^0.11.1"
-pydocstyle = "^6.1.1"
+pydocstyle = ">= 6.1.1"
 
 [build-system]
 requires = ["poetry-core"]
