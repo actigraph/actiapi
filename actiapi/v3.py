@@ -12,6 +12,8 @@ from actiapi import ActiGraphClient
 analytics_token = None
 session = requests.Session()
 
+logger = logging.getLogger(__name__)
+
 
 class ActiGraphClientV3(ActiGraphClient):
     """Client for CentrePoint V3 API."""
@@ -246,6 +248,7 @@ class ActiGraphClientV3(ActiGraphClient):
         return results
 
     def _get_single(self, request: str, token: str):
+        logger.info("Requesting %s", request)
         headers = self._generate_headers(token)
         response = session.get(self.BASE_URL + request, headers=headers, stream=False)
         reply = validate_response(response)
@@ -269,7 +272,7 @@ class ActiGraphClientV3(ActiGraphClient):
                 break
             offset += limit
         if len(results) == 0:
-            logging.error("No raw data found.")
+            logger.error("No data found for request: %s", request)
             return []
         return results
 
@@ -277,7 +280,7 @@ class ActiGraphClientV3(ActiGraphClient):
 def validate_response(response):
     """Check response status."""
     if response.status_code == 404:
-        logging.warning("404 Not Found!")
+        logger.warning("404 Not Found!")
         result = None
     else:
         result = response.json()
