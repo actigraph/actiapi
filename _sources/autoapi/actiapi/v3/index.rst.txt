@@ -41,6 +41,7 @@ Attributes
 
    actiapi.v3.analytics_token
    actiapi.v3.session
+   actiapi.v3.logger
 
 
 .. py:data:: analytics_token
@@ -48,6 +49,10 @@ Attributes
    
 
 .. py:data:: session
+
+   
+
+.. py:data:: logger
 
    
 
