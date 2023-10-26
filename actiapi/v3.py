@@ -57,6 +57,7 @@ class ActiGraphClientV3(ActiGraphClient):
         start: Optional[str] = None,
         end: Optional[str] = None,
         data_format: Literal["avro", "csv"] = "avro",
+        sensor: Literal["raw-accelerometer", "temperature", "green-ppg"]="raw-accelerometer",
     ) -> List[str]:
         """Return download URLs to raw AVRO files.
 
@@ -72,6 +73,8 @@ class ActiGraphClientV3(ActiGraphClient):
             End timestamp string in ISO8601 format
         data_format:
             Raw data file format; avro (default) or csv.
+        sensor:
+
         """
         assert data_format in ("avro", "csv")
 
@@ -81,7 +84,7 @@ class ActiGraphClientV3(ActiGraphClient):
 
         request_string = (
             f"/dataaccess/v3/files/studies/{study_id}/subjects/{user}"
-            f"/raw-accelerometer?fileFormat={data_format}"
+            f"/raw-accelerometer?fileFormat={data_format}?dataCategory={sensor}"
         )
         if start is not None:
             request_string += f"&startDate={start}"
