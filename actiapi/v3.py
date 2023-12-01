@@ -87,7 +87,7 @@ class ActiGraphClientV3(ActiGraphClient):
 
         request_string = (
             f"/dataaccess/v3/files/studies/{study_id}/subjects/{user}"
-            f"/raw-accelerometer?fileFormat={data_format}?dataCategory={sensor}"
+            f"/{sensor}?fileFormat={data_format}"
         )
         if start is not None:
             request_string += f"&startDate={start}"
