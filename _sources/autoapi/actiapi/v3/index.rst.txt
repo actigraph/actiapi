@@ -98,7 +98,7 @@ Attributes
    .. py:method:: _get_access_token(scope: str)
 
 
-   .. py:method:: get_files(user: Union[int, str], study_id: int, start: Optional[str] = None, end: Optional[str] = None, data_format: Literal[avro, csv] = 'avro') -> List[str]
+   .. py:method:: get_files(user: Union[int, str], study_id: int, start: Optional[str] = None, end: Optional[str] = None, data_format: Literal[avro, csv] = 'avro', sensor: Literal[raw-accelerometer, temperature, green-ppg] = 'raw-accelerometer') -> List[str]
 
       
       Return download URLs to raw AVRO files.
@@ -108,6 +108,8 @@ Attributes
       :param start: Start timestamp string in ISO8601 format
       :param end: End timestamp string in ISO8601 format
       :param data_format: Raw data file format; avro (default) or csv.
+      :param sensor: Type of raw data (raw-accelerometer, green-ppg or temperature), defaults to
+                     raw-accelerometer
 
 
 
