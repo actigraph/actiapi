@@ -59,7 +59,7 @@ class ActiGraphClientV3(ActiGraphClient):
         data_format: Literal["avro", "csv"] = "avro",
         sensor: Literal[
             "raw-accelerometer", "temperature",
-            "ppg-green (25hz)", "ppg-green-100-hz",
+            "ppg-green", "ppg-green-100-hz",
             "barometer", "imu", "ppg-red-ir-50-hz",
         ] = "raw-accelerometer",
     ) -> List[str]:
