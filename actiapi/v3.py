@@ -58,7 +58,9 @@ class ActiGraphClientV3(ActiGraphClient):
         end: Optional[str] = None,
         data_format: Literal["avro", "csv"] = "avro",
         sensor: Literal[
-            "raw-accelerometer", "temperature", "ppg-green"
+            "raw-accelerometer", "temperature",
+            "ppg-green", "ppg-green-100-hz",
+            "barometer", "imu", "ppg-red-ir-50-hz",
         ] = "raw-accelerometer",
     ) -> List[str]:
         """Return download URLs to raw AVRO files.
