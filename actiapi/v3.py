@@ -2,6 +2,7 @@
 
 See https://github.com/actigraph/CentrePoint3APIDocumentation.
 """
+
 import logging
 from typing import Any, Dict, List, Literal, Optional, Union
 
@@ -58,9 +59,13 @@ class ActiGraphClientV3(ActiGraphClient):
         end: Optional[str] = None,
         data_format: Literal["avro", "csv"] = "avro",
         sensor: Literal[
-            "raw-accelerometer", "temperature",
-            "ppg-green", "ppg-green-100-hz",
-            "barometer", "imu", "ppg-red-ir-50-hz",
+            "raw-accelerometer",
+            "temperature",
+            "ppg-green",
+            "ppg-green-100-hz",
+            "barometer",
+            "imu",
+            "ppg-red-ir-50-hz",
         ] = "raw-accelerometer",
     ) -> List[str]:
         """Return download URLs to raw AVRO files.
@@ -118,7 +123,6 @@ class ActiGraphClientV3(ActiGraphClient):
         results = self._get_single(f"/centrepoint/v3/Studies/{study_id}", token)
         return results
 
-
     def get_studies(self) -> List[Dict[str, Any]]:
         """Save high-level study info to file.
 
@@ -129,7 +133,7 @@ class ActiGraphClientV3(ActiGraphClient):
         """
         token = self._get_access_token("CentrePoint")
 
-        results = self._get_paginated(f"/centrepoint/v3/Studies?", token)
+        results = self._get_paginated("/centrepoint/v3/Studies?", token)
         return results
 
     def get_study_metadata(self, study_id) -> List[Dict[str, Any]]:
