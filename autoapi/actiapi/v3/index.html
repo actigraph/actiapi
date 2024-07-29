@@ -72,11 +72,11 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">actiapi.v3</span></code></a><ul>
-<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li><a class="reference internal" href="#">actiapi.v3</a><ul>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
 <li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#functions">Functions</a></li>
-<li><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#actiapi.v3.analytics_token"><code class="docutils literal notranslate"><span class="pre">analytics_token</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v3.session"><code class="docutils literal notranslate"><span class="pre">session</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v3.logger"><code class="docutils literal notranslate"><span class="pre">logger</span></code></a></li>
@@ -87,6 +87,7 @@
 <li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3._get_access_token"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV3._get_access_token()</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_files"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV3.get_files()</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_study_info"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV3.get_study_info()</span></code></a></li>
+<li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_studies"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV3.get_studies()</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_study_metadata"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV3.get_study_metadata()</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_event_markers"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV3.get_event_markers()</span></code></a></li>
 <li><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3.get_minute_summary"><code class="docutils literal notranslate"><span class="pre">ActiGraphClientV3.get_minute_summary()</span></code></a></li>
@@ -97,8 +98,6 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#actiapi.v3.validate_response"><code class="docutils literal notranslate"><span class="pre">validate_response()</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -139,33 +138,11 @@
     <div class="body col-md-12 content" role="main">
       
   <section id="module-actiapi.v3">
-<span id="actiapi-v3"></span><h1><a class="reference internal" href="#module-actiapi.v3" title="actiapi.v3"><code class="xref py py-mod docutils literal notranslate"><span class="pre">actiapi.v3</span></code></a><a class="headerlink" href="#module-actiapi.v3" title="Permalink to this heading">¶</a></h1>
+<span id="actiapi-v3"></span><h1>actiapi.v3<a class="headerlink" href="#module-actiapi.v3" title="Permalink to this heading">¶</a></h1>
 <p>Client for API V2.</p>
 <p>See <a class="reference external" href="https://github.com/actigraph/CentrePoint3APIDocumentation">https://github.com/actigraph/CentrePoint3APIDocumentation</a>.</p>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
-<section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h3>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3" title="actiapi.v3.ActiGraphClientV3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ActiGraphClientV3</span></code></a></p></td>
-<td><p>Client for CentrePoint V3 API.</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="functions">
-<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h3>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#actiapi.v3.validate_response" title="actiapi.v3.validate_response"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_response</span></code></a>(response)</p></td>
-<td><p>Check response status.</p></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="attributes">
-<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">¶</a></h3>
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">¶</a></h2>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#actiapi.v3.analytics_token" title="actiapi.v3.analytics_token"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analytics_token</span></code></a></p></td>
@@ -179,9 +156,32 @@
 </tr>
 </tbody>
 </table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#actiapi.v3.ActiGraphClientV3" title="actiapi.v3.ActiGraphClientV3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ActiGraphClientV3</span></code></a></p></td>
+<td><p>Client for CentrePoint V3 API.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#actiapi.v3.validate_response" title="actiapi.v3.validate_response"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_response</span></code></a>(response)</p></td>
+<td><p>Check response status.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
 <dl class="py data">
 <dt class="sig sig-object py" id="actiapi.v3.analytics_token">
-<span class="sig-prename descclassname"><span class="pre">actiapi.v3.</span></span><span class="sig-name descname"><span class="pre">analytics_token</span></span><a class="reference internal" href="../../../_modules/actiapi/v3.html#analytics_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v3.analytics_token" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">actiapi.v3.</span></span><span class="sig-name descname"><span class="pre">analytics_token</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference internal" href="../../../_modules/actiapi/v3.html#analytics_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v3.analytics_token" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
@@ -221,7 +221,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="actiapi.v3.ActiGraphClientV3.get_files">
-<span class="sig-name descname"><span class="pre">get_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">avro</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">csv</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'avro'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal[raw</span> <span class="pre">-</span> <span class="pre">accelerometer,</span> <span class="pre">temperature,</span> <span class="pre">ppg</span> <span class="pre">-</span> <span class="pre">green,</span> <span class="pre">ppg</span> <span class="pre">-</span> <span class="pre">green</span> <span class="pre">-</span> <span class="pre">100</span> <span class="pre">-</span> <span class="pre">hz,</span> <span class="pre">barometer,</span> <span class="pre">imu,</span> <span class="pre">ppg</span> <span class="pre">-</span> <span class="pre">red</span> <span class="pre">-</span> <span class="pre">ir</span> <span class="pre">-</span> <span class="pre">50</span> <span class="pre">-</span> <span class="pre">hz]</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'raw-accelerometer'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/actiapi/v3.html#ActiGraphClientV3.get_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v3.ActiGraphClientV3.get_files" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">study_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'avro'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'csv'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'avro'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'raw-accelerometer'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'temperature'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ppg-green'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ppg-green-100-hz'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'barometer'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'imu'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ppg-red-ir-50-hz'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'raw-accelerometer'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/actiapi/v3.html#ActiGraphClientV3.get_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v3.ActiGraphClientV3.get_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return download URLs to raw AVRO files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -241,6 +241,17 @@ raw-accelerometer</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="actiapi.v3.ActiGraphClientV3.get_study_info">
 <span class="sig-name descname"><span class="pre">get_study_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study_id</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/actiapi/v3.html#ActiGraphClientV3.get_study_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v3.ActiGraphClientV3.get_study_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save high-level study info to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>study_id</strong> – Id of the study</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="actiapi.v3.ActiGraphClientV3.get_studies">
+<span class="sig-name descname"><span class="pre">get_studies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/actiapi/v3.html#ActiGraphClientV3.get_studies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#actiapi.v3.ActiGraphClientV3.get_studies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save high-level study info to file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -334,7 +345,6 @@ raw-accelerometer</p></li>
 <dd><p>Check response status.</p>
 </dd></dl>
 
-</section>
 </section>
 </section>
 

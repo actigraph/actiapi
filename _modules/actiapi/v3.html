@@ -220,6 +220,20 @@
         <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_single</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/centrepoint/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span></div>
 
+
+<div class="viewcode-block" id="ActiGraphClientV3.get_studies"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3.get_studies">[docs]</a>    <span class="k">def</span> <span class="nf">get_studies</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save high-level study info to file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        study_id:</span>
+<span class="sd">            Id of the study</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span><span class="s2">&quot;CentrePoint&quot;</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/centrepoint/v3/Studies?&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
 <div class="viewcode-block" id="ActiGraphClientV3.get_study_metadata"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3.get_study_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">get_study_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">study_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Save all study metadata to file.</span>
 

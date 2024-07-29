@@ -1,5 +1,5 @@
-:py:mod:`actiapi.v2`
-====================
+actiapi.v2
+==========
 
 .. py:module:: actiapi.v2
 
@@ -13,35 +13,31 @@
        !! processed by numpydoc !!
 
 
-Module Contents
----------------
-
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   actiapi.v2.ActiGraphClientV2
-
-
-
-
 Attributes
-~~~~~~~~~~
+----------
 
 .. autoapisummary::
 
    actiapi.v2.session
 
 
-.. py:data:: session
+Classes
+-------
 
-   
+.. autoapisummary::
+
+   actiapi.v2.ActiGraphClientV2
+
+
+Module Contents
+---------------
+
+.. py:data:: session
 
 .. py:class:: ActiGraphClientV2(api_access_key: str, api_secret_key: str)
 
-
    Bases: :py:obj:`actiapi.ActiGraphClient`
+
 
    
    Client for CentrePoint V2 API.
@@ -63,10 +59,11 @@ Attributes
 
    ..
        !! processed by numpydoc !!
+
    .. py:attribute:: BASE_URL
       :value: 'https://studyadmin-api.actigraphcorp.com'
 
-      
+
 
    .. py:method:: _HMACSHA256Base64(message: str)
 
@@ -94,6 +91,7 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: get_study_metadata(study_id: str) -> List[Dict[str, Any]]
 
       
@@ -116,6 +114,7 @@ Attributes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: get_files(subject_id) -> List[Dict[str, Any]]
 
@@ -140,6 +139,7 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: get_url(data_file_id) -> str
 
       
@@ -162,6 +162,7 @@ Attributes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: get_daily_summary(subject_id: Union[int, str]) -> List[Dict[str, Any]]
 

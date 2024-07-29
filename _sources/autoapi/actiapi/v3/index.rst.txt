@@ -1,5 +1,5 @@
-:py:mod:`actiapi.v3`
-====================
+actiapi.v3
+==========
 
 .. py:module:: actiapi.v3
 
@@ -13,29 +13,8 @@
        !! processed by numpydoc !!
 
 
-Module Contents
----------------
-
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   actiapi.v3.ActiGraphClientV3
-
-
-
-Functions
-~~~~~~~~~
-
-.. autoapisummary::
-
-   actiapi.v3.validate_response
-
-
-
 Attributes
-~~~~~~~~~~
+----------
 
 .. autoapisummary::
 
@@ -44,22 +23,37 @@ Attributes
    actiapi.v3.logger
 
 
-.. py:data:: analytics_token
+Classes
+-------
 
-   
+.. autoapisummary::
+
+   actiapi.v3.ActiGraphClientV3
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   actiapi.v3.validate_response
+
+
+Module Contents
+---------------
+
+.. py:data:: analytics_token
+   :value: None
+
 
 .. py:data:: session
 
-   
-
 .. py:data:: logger
-
-   
 
 .. py:class:: ActiGraphClientV3(api_access_key: str, api_secret_key: str)
 
-
    Bases: :py:obj:`actiapi.ActiGraphClient`
+
 
    
    Client for CentrePoint V3 API.
@@ -81,24 +75,26 @@ Attributes
 
    ..
        !! processed by numpydoc !!
+
    .. py:attribute:: BASE_URL
       :value: 'https://api.actigraphcorp.com'
 
-      
+
 
    .. py:attribute:: AUTH_API
       :value: 'https://auth.actigraphcorp.com/connect/token'
 
-      
+
 
    .. py:method:: _generate_headers(token: str, raw: bool = False)
       :staticmethod:
 
 
+
    .. py:method:: _get_access_token(scope: str)
 
 
-   .. py:method:: get_files(user: Union[int, str], study_id: int, start: Optional[str] = None, end: Optional[str] = None, data_format: Literal[avro, csv] = 'avro', sensor: Literal[raw-accelerometer, temperature, ppg-green, ppg-green-100-hz, barometer, imu, ppg-red-ir-50-hz] = 'raw-accelerometer') -> List[str]
+   .. py:method:: get_files(user: Union[int, str], study_id: int, start: Optional[str] = None, end: Optional[str] = None, data_format: Literal['avro', 'csv'] = 'avro', sensor: Literal['raw-accelerometer', 'temperature', 'ppg-green', 'ppg-green-100-hz', 'barometer', 'imu', 'ppg-red-ir-50-hz'] = 'raw-accelerometer') -> List[str]
 
       
       Return download URLs to raw AVRO files.
@@ -128,6 +124,7 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: get_study_info(study_id) -> List[Dict[str, Any]]
 
       
@@ -152,6 +149,32 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
+   .. py:method:: get_studies() -> List[Dict[str, Any]]
+
+      
+      Save high-level study info to file.
+
+      :param study_id: Id of the study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      ..
+          !! processed by numpydoc !!
+
+
    .. py:method:: get_study_metadata(study_id) -> List[Dict[str, Any]]
 
       
@@ -175,6 +198,7 @@ Attributes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: get_event_markers(user: Union[int, str], study_id: int) -> List[str]
 
@@ -201,6 +225,7 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: get_minute_summary(user: Union[int, str], study_id: int) -> List[Dict[str, Any]]
 
       
@@ -225,6 +250,7 @@ Attributes
 
       ..
           !! processed by numpydoc !!
+
 
    .. py:method:: get_daily_summary(user: Union[int, str], study_id: int) -> List[Dict[str, Any]]
 
@@ -251,6 +277,7 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: get_sleep_summary(user: Union[int, str], study_id: int) -> List[Dict[str, Any]]
 
       
@@ -276,11 +303,11 @@ Attributes
       ..
           !! processed by numpydoc !!
 
+
    .. py:method:: _get_single(request: str, token: str)
 
 
    .. py:method:: _get_paginated(request: str, token: str)
-
 
 
 .. py:function:: validate_response(response)

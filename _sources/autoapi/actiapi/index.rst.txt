@@ -1,5 +1,5 @@
-:py:mod:`actiapi`
-=================
+actiapi
+=======
 
 .. py:module:: actiapi
 
@@ -29,29 +29,26 @@
 
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   v2/index.rst
-   v3/index.rst
+   /autoapi/actiapi/v2/index
+   /autoapi/actiapi/v3/index
 
-
-Package Contents
-----------------
 
 Classes
-~~~~~~~
+-------
 
 .. autoapisummary::
 
    actiapi.ActiGraphClient
 
 
-
+Package Contents
+----------------
 
 .. py:class:: ActiGraphClient(api_access_key: str, api_secret_key: str)
-
 
    
    Base classe for ActiGraph API clients.
@@ -75,4 +72,10 @@ Classes
 
    ..
        !! processed by numpydoc !!
+
+   .. py:attribute:: api_access_key
+
+
+   .. py:attribute:: api_secret_key
+
 
