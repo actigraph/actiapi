@@ -118,6 +118,20 @@ class ActiGraphClientV3(ActiGraphClient):
         results = self._get_single(f"/centrepoint/v3/Studies/{study_id}", token)
         return results
 
+
+    def get_studies(self) -> List[Dict[str, Any]]:
+        """Save high-level study info to file.
+
+        Parameters
+        ----------
+        study_id:
+            Id of the study
+        """
+        token = self._get_access_token("CentrePoint")
+
+        results = self._get_paginated(f"/centrepoint/v3/Studies?", token)
+        return results
+
     def get_study_metadata(self, study_id) -> List[Dict[str, Any]]:
         """Save all study metadata to file.
 
