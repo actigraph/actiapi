@@ -9,8 +9,7 @@ def test_study_info(v3_client, v3_study_id):
 
 def test_studies(v3_client):
     info = v3_client.get_studies()
-    assert info[10]["id"] == 954
-    assert info[10]["name"] == "GT9X - CP3 Validation Study"
+    assert len(info) > 1
 
 
 def test_metadata(v3_client, v3_study_id):

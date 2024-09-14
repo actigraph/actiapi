@@ -4,13 +4,14 @@ See https://github.com/actigraph/CentrePoint3APIDocumentation.
 """
 
 import logging
+from collections import defaultdict
 from typing import Any, Dict, List, Literal, Optional, Union
 
 import requests
 
 from actiapi import ActiGraphClient
 
-analytics_token = None
+tokens: defaultdict[str, Optional[str]] = defaultdict(lambda: None)
 session = requests.Session()
 
 logger = logging.getLogger(__name__)
@@ -88,10 +89,6 @@ class ActiGraphClientV3(ActiGraphClient):
         """
         assert data_format in ("avro", "csv")
 
-        token = self._get_access_token(
-            "DataAccess",
-        )
-
         request_string = (
             f"/dataaccess/v3/files/studies/{study_id}/subjects/{user}"
             f"/{sensor}?fileFormat={data_format}"
@@ -103,7 +100,7 @@ class ActiGraphClientV3(ActiGraphClient):
         request_string += "&"
         results = self._get_paginated(
             request_string,
-            token,
+            scope="DataAccess",
         )
 
         results = [x["downloadUrl"] for x in results]
@@ -118,9 +115,9 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        token = self._get_access_token("CentrePoint")
-
-        results = self._get_single(f"/centrepoint/v3/Studies/{study_id}", token)
+        results = self._get_single(
+            f"/centrepoint/v3/Studies/{study_id}", scope="CentrePoint"
+        )
         return results
 
     def get_studies(self) -> List[Dict[str, Any]]:
@@ -131,9 +128,7 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        token = self._get_access_token("CentrePoint")
-
-        results = self._get_paginated("/centrepoint/v3/Studies?", token)
+        results = self._get_paginated("/centrepoint/v3/Studies?", scope="CentrePoint")
         return results
 
     def get_study_metadata(self, study_id) -> List[Dict[str, Any]]:
@@ -144,10 +139,8 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        token = self._get_access_token("CentrePoint")
-
         results = self._get_paginated(
-            f"/centrepoint/v3/Studies/{study_id}/Subjects?", token
+            f"/centrepoint/v3/Studies/{study_id}/Subjects?", scope="CentrePoint"
         )
         return results
 
@@ -161,22 +154,10 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        global analytics_token
-
-        try:
-            assert analytics_token is not None
-            results = self._get_paginated(
-                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/EventMarkers?",
-                analytics_token,
-            )
-        except (KeyError, AssertionError):
-            analytics_token = self._get_access_token(
-                "Analytics",
-            )
-            results = self._get_paginated(
-                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/EventMarkers?",
-                analytics_token,
-            )
+        results = self._get_paginated(
+            f"/analytics/v3/Studies/{study_id}/Subjects/{user}/EventMarkers?",
+            scope="Analytics",
+        )
 
         return results
 
@@ -192,22 +173,10 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        global analytics_token
-
-        try:
-            assert analytics_token is not None
-            results = self._get_paginated(
-                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/MinuteSummaries?",
-                analytics_token,
-            )
-        except (KeyError, AssertionError):
-            analytics_token = self._get_access_token(
-                "Analytics",
-            )
-            results = self._get_paginated(
-                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/MinuteSummaries?",
-                analytics_token,
-            )
+        results = self._get_paginated(
+            f"/analytics/v3/Studies/{study_id}/Subjects/{user}/MinuteSummaries?",
+            scope="Analytics",
+        )
 
         return results
 
@@ -223,21 +192,10 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        global analytics_token
-        try:
-            assert analytics_token is not None
-            results = self._get_paginated(
-                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/DailyStatistics?",
-                analytics_token,
-            )
-        except (KeyError, AssertionError):
-            analytics_token = self._get_access_token(
-                "Analytics",
-            )
-            results = self._get_paginated(
-                f"/analytics/v3/Studies/{study_id}/Subjects/{user}/DailyStatistics?",
-                analytics_token,
-            )
+        results = self._get_paginated(
+            f"/analytics/v3/Studies/{study_id}/Subjects/{user}/DailyStatistics?",
+            scope="Analytics",
+        )
 
         return results
 
@@ -253,44 +211,44 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        global analytics_token
-        try:
-            assert analytics_token is not None
-            results = self._get_paginated(
-                f"/analytics/v3/Studies/{study_id}/Subjects/"
-                f"{user}/DustinTracySleepPeriods?",
-                analytics_token,
-            )
-        except (KeyError, AssertionError):
-            analytics_token = self._get_access_token(
-                "Analytics",
-            )
-            results = self._get_paginated(
-                f"/analytics/v3/Studies/{study_id}/Subjects/"
-                f"{user}/DustinTracySleepPeriods?",
-                analytics_token,
-            )
+        results = self._get_paginated(
+            f"/analytics/v3/Studies/{study_id}/Subjects/"
+            f"{user}/DustinTracySleepPeriods?",
+            scope="Analytics",
+        )
 
         return results
 
-    def _get_single(self, request: str, token: str):
+    def _get_single(self, request: str, scope: str):
+        global tokens
+        if tokens[scope] is None:
+            tokens[scope] = self._get_access_token(scope)
         logger.info("Requesting %s", request)
-        headers = self._generate_headers(token)
+        headers = self._generate_headers(str(tokens[scope]))
         response = session.get(self.BASE_URL + request, headers=headers, stream=False)
         reply = validate_response(response)
         return reply
 
-    def _get_paginated(self, request: str, token: str):
+    def _get_paginated(self, request: str, scope: str):
+        global tokens
         results = []
         offset = 0
         limit = 100
         while True:
             paginated_request = f"{request}offset={offset}&limit={limit}"
-            reply = self._get_single(request=paginated_request, token=token)
-            if reply is None:
-                break
+            try:
+                reply = self._get_single(request=paginated_request, scope=scope)
+                if reply is None:
+                    break
 
-            total_count = reply["totalCount"]
+                total_count = reply["totalCount"]
+            except KeyError:
+                tokens[scope] = None
+                reply = self._get_single(request=paginated_request, scope=scope)
+                if reply is None:
+                    break
+
+                total_count = reply["totalCount"]
 
             for item in reply["items"]:
                 results.append(item)
