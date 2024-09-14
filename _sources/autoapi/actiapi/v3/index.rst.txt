@@ -18,7 +18,7 @@ Attributes
 
 .. autoapisummary::
 
-   actiapi.v3.analytics_token
+   actiapi.v3.tokens
    actiapi.v3.session
    actiapi.v3.logger
 
@@ -42,9 +42,8 @@ Functions
 Module Contents
 ---------------
 
-.. py:data:: analytics_token
-   :value: None
-
+.. py:data:: tokens
+   :type:  collections.defaultdict[str, Optional[str]]
 
 .. py:data:: session
 
@@ -304,10 +303,10 @@ Module Contents
           !! processed by numpydoc !!
 
 
-   .. py:method:: _get_single(request: str, token: str)
+   .. py:method:: _get_single(request: str, scope: str)
 
 
-   .. py:method:: _get_paginated(request: str, token: str)
+   .. py:method:: _get_paginated(request: str, scope: str)
 
 
 .. py:function:: validate_response(response)

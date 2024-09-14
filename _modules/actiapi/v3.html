@@ -106,13 +106,14 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="kn">from</span> <span class="nn">actiapi</span> <span class="kn">import</span> <span class="n">ActiGraphClient</span>
 
-<div class="viewcode-block" id="analytics_token"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.analytics_token">[docs]</a><span class="n">analytics_token</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="tokens"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.tokens">[docs]</a><span class="n">tokens</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span></div>
 <div class="viewcode-block" id="session"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.session">[docs]</a><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="logger"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.logger">[docs]</a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
@@ -190,10 +191,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">data_format</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;avro&quot;</span><span class="p">,</span> <span class="s2">&quot;csv&quot;</span><span class="p">)</span>
 
-        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
-            <span class="s2">&quot;DataAccess&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
-
         <span class="n">request_string</span> <span class="o">=</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;/dataaccess/v3/files/studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">sensor</span><span class="si">}</span><span class="s2">?fileFormat=</span><span class="si">{</span><span class="n">data_format</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -205,7 +202,7 @@
         <span class="n">request_string</span> <span class="o">+=</span> <span class="s2">&quot;&amp;&quot;</span>
         <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
             <span class="n">request_string</span><span class="p">,</span>
-            <span class="n">token</span><span class="p">,</span>
+            <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;DataAccess&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;downloadUrl&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
@@ -220,9 +217,9 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span><span class="s2">&quot;CentrePoint&quot;</span><span class="p">)</span>
-
-        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_single</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/centrepoint/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_single</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/centrepoint/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;CentrePoint&quot;</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="ActiGraphClientV3.get_studies"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3.get_studies">[docs]</a>    <span class="k">def</span> <span class="nf">get_studies</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
@@ -233,9 +230,7 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span><span class="s2">&quot;CentrePoint&quot;</span><span class="p">)</span>
-
-        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span><span class="s2">&quot;/centrepoint/v3/Studies?&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span><span class="s2">&quot;/centrepoint/v3/Studies?&quot;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;CentrePoint&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span></div>
 
 <div class="viewcode-block" id="ActiGraphClientV3.get_study_metadata"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3.get_study_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">get_study_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">study_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
@@ -246,10 +241,8 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span><span class="s2">&quot;CentrePoint&quot;</span><span class="p">)</span>
-
         <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;/centrepoint/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects?&quot;</span><span class="p">,</span> <span class="n">token</span>
+            <span class="sa">f</span><span class="s2">&quot;/centrepoint/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects?&quot;</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;CentrePoint&quot;</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">results</span></div>
 
@@ -263,22 +256,10 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">global</span> <span class="n">analytics_token</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">analytics_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/EventMarkers?&quot;</span><span class="p">,</span>
-                <span class="n">analytics_token</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AssertionError</span><span class="p">):</span>
-            <span class="n">analytics_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
-                <span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/EventMarkers?&quot;</span><span class="p">,</span>
-                <span class="n">analytics_token</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/EventMarkers?&quot;</span><span class="p">,</span>
+            <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">results</span></div>
 
@@ -294,22 +275,10 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">global</span> <span class="n">analytics_token</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">analytics_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/MinuteSummaries?&quot;</span><span class="p">,</span>
-                <span class="n">analytics_token</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AssertionError</span><span class="p">):</span>
-            <span class="n">analytics_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
-                <span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/MinuteSummaries?&quot;</span><span class="p">,</span>
-                <span class="n">analytics_token</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/MinuteSummaries?&quot;</span><span class="p">,</span>
+            <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">results</span></div>
 
@@ -325,21 +294,10 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">global</span> <span class="n">analytics_token</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">analytics_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DailyStatistics?&quot;</span><span class="p">,</span>
-                <span class="n">analytics_token</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AssertionError</span><span class="p">):</span>
-            <span class="n">analytics_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
-                <span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DailyStatistics?&quot;</span><span class="p">,</span>
-                <span class="n">analytics_token</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DailyStatistics?&quot;</span><span class="p">,</span>
+            <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">results</span></div>
 
@@ -355,44 +313,44 @@
 <span class="sd">        study_id:</span>
 <span class="sd">            Id of the study</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">global</span> <span class="n">analytics_token</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">analytics_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DustinTracySleepPeriods?&quot;</span><span class="p">,</span>
-                <span class="n">analytics_token</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AssertionError</span><span class="p">):</span>
-            <span class="n">analytics_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span>
-                <span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DustinTracySleepPeriods?&quot;</span><span class="p">,</span>
-                <span class="n">analytics_token</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paginated</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;/analytics/v3/Studies/</span><span class="si">{</span><span class="n">study_id</span><span class="si">}</span><span class="s2">/Subjects/&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">/DustinTracySleepPeriods?&quot;</span><span class="p">,</span>
+            <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Analytics&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">results</span></div>
 
-<div class="viewcode-block" id="ActiGraphClientV3._get_single"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3._get_single">[docs]</a>    <span class="k">def</span> <span class="nf">_get_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="ActiGraphClientV3._get_single"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3._get_single">[docs]</a>    <span class="k">def</span> <span class="nf">_get_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scope</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">tokens</span>
+        <span class="k">if</span> <span class="n">tokens</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tokens</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Requesting </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_headers</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_headers</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">scope</span><span class="p">]))</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">request</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">reply</span> <span class="o">=</span> <span class="n">validate_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">reply</span></div>
 
-<div class="viewcode-block" id="ActiGraphClientV3._get_paginated"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3._get_paginated">[docs]</a>    <span class="k">def</span> <span class="nf">_get_paginated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="ActiGraphClientV3._get_paginated"><a class="viewcode-back" href="../../autoapi/actiapi/v3/index.html#actiapi.v3.ActiGraphClientV3._get_paginated">[docs]</a>    <span class="k">def</span> <span class="nf">_get_paginated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">scope</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">tokens</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">paginated_request</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">request</span><span class="si">}</span><span class="s2">offset=</span><span class="si">{</span><span class="n">offset</span><span class="si">}</span><span class="s2">&amp;limit=</span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_single</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">paginated_request</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">reply</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">break</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_single</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">paginated_request</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">reply</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">break</span>
 
-            <span class="n">total_count</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="s2">&quot;totalCount&quot;</span><span class="p">]</span>
+                <span class="n">total_count</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="s2">&quot;totalCount&quot;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">reply</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_single</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">paginated_request</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">reply</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="n">total_count</span> <span class="o">=</span> <span class="n">reply</span><span class="p">[</span><span class="s2">&quot;totalCount&quot;</span><span class="p">]</span>
 
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">reply</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]:</span>
                 <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
