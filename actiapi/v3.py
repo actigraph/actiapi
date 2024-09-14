@@ -2,15 +2,16 @@
 
 See https://github.com/actigraph/CentrePoint3APIDocumentation.
 """
-from collections import defaultdict
+
 import logging
+from collections import defaultdict
 from typing import Any, Dict, List, Literal, Optional, Union
 
 import requests
 
 from actiapi import ActiGraphClient
 
-tokens = defaultdict(lambda: None)
+tokens: defaultdict[str, Optional[str]] = defaultdict(lambda: None)
 session = requests.Session()
 
 logger = logging.getLogger(__name__)
@@ -114,7 +115,9 @@ class ActiGraphClientV3(ActiGraphClient):
         study_id:
             Id of the study
         """
-        results = self._get_single(f"/centrepoint/v3/Studies/{study_id}", scope="CentrePoint")
+        results = self._get_single(
+            f"/centrepoint/v3/Studies/{study_id}", scope="CentrePoint"
+        )
         return results
 
     def get_studies(self) -> List[Dict[str, Any]]:
@@ -172,7 +175,7 @@ class ActiGraphClientV3(ActiGraphClient):
         """
         results = self._get_paginated(
             f"/analytics/v3/Studies/{study_id}/Subjects/{user}/MinuteSummaries?",
-            scope="Analytics"
+            scope="Analytics",
         )
 
         return results
@@ -214,7 +217,6 @@ class ActiGraphClientV3(ActiGraphClient):
             scope="Analytics",
         )
 
-
         return results
 
     def _get_single(self, request: str, scope: str):
@@ -222,7 +224,7 @@ class ActiGraphClientV3(ActiGraphClient):
         if tokens[scope] is None:
             tokens[scope] = self._get_access_token(scope)
         logger.info("Requesting %s", request)
-        headers = self._generate_headers(tokens[scope])
+        headers = self._generate_headers(str(tokens[scope]))
         response = session.get(self.BASE_URL + request, headers=headers, stream=False)
         reply = validate_response(response)
         return reply
