@@ -4,27 +4,32 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'master'
 
 jobs:
     ci:
       strategy:
         fail-fast: true
         matrix:
-          python-version: ["3.10"]
+          python-version: ["3.11", "3.12"]
           os: [ubuntu-latest]
       runs-on: ${{ matrix.os }}
       steps:
         - uses: actions/checkout@v3
           with:
             fetch-depth: 0
-        - name: Install poetry
-          run: pipx install poetry
+        - name: Install uv
+          run: pipx install uv
         - name: Set up Python
           uses: actions/setup-python@v4
           with:
             python-version: ${{ matrix.python-version }}
             cache: 'poetry'
         - name: Install python dependencies
-          run: poetry install
+          run: uv sync
         - name: Style
-          run: poetry run make lint
+          run: uv run make lint
