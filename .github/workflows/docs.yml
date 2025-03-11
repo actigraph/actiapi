@@ -20,11 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Generate docs
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set up Python 3.12
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install uv
@@ -52,11 +52,11 @@ jobs:
     needs: generate_docs
     name: Copy docs
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Download pages
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docs
       - name: Deploy 🚀
